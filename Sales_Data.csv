@@ -1,4 +1,4 @@
-Date,Sales ($),TV_ads ($),online_ads ($),Print_ads ($),Price ($)
+Date,Sales,TV_ads,online_ads,Print_ads,Price
 Jan-08,6237000,181223,12153,24987,135
 Feb-08,6115500,179104,57353,17574,135
 Mar-08,10577250,222756,146794,16016,135
