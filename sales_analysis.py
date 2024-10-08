@@ -9,4 +9,5 @@ import matplotlib.pyplot as plt
 # Step 2: Load Dataset into Pandas DataFrame
 dataFrame = pd.read_csv('Sales_Data.csv')
 
-print(dataFrame)
+print(dataFrame.info()) #Checks to see if we have any blank cells in our dataset
+print(dataFrame.describe()) #Churns out high level stas from your dataset
