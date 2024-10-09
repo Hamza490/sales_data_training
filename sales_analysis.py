@@ -70,12 +70,48 @@ def add_interaction_terms(x):
             feature2 = x.columns[j]
             interaction_name = f"{feature1}_x_{feature2}"
             interactions[interaction_name] = x[feature1] * x[feature2]
+  '''
   print("Interaction Terms Names:")
   for name in interactions.keys():
-      print(name)
+      print(name)'''
   return pd.DataFrame(interactions)
 
-interaction_terms = add_interaction_terms(x_train)
+def fit_and_plot_model(X_train, y_train, X_test, y_test, model_number):
+    X_train_const = sm.add_constant(X_train)  # Add a constant term to the model (intercept)
+    model = sm.OLS(y_train, X_train_const).fit()
+    
+    # Predictions and R^2 calculation
+    y_pred = model.predict(sm.add_constant(X_test))
+    r2 = r2_score(y_test, y_pred)
+    
+    # Plotting
+    plt.figure()
+    plt.title(f'Model {model_number}: R² = {r2:.4f}')
+    plt.scatter(y_test, y_pred, label='Predicted vs Actual')
+    plt.xlabel('Actual Sales')
+    plt.ylabel('Predicted Sales')
+    plt.plot([y.min(), y.max()], [y.min(), y.max()], '--', color='r')
+    plt.legend()
+    plt.show()
 
+    return model, r2
 
+# Adding interaction terms and fitting for Model 1 (All Variables)
+x1_interaction_train = add_interaction_terms(x1_train)
+x1_interaction_test = add_interaction_terms(x1_test)
+model_1_interaction, r2_model_1 = fit_and_plot_model(x1_interaction_train, y_train, x1_interaction_test, y_test, model_number=1)
 
+# Adding interaction terms and fitting for Model 2 (Price)
+#x2_interaction_train = add_interaction_terms(x2_train)
+#x2_interaction_test = add_interaction_terms(x2_test)
+#model_2_interaction, r2_model_2 = fit_and_plot_model(x2_interaction_train, y_train, x2_interaction_test, y_test, model_number=2)
+
+# Adding interaction terms and fitting for Model 3 (Price, Print_ads)
+x3_interaction_train = add_interaction_terms(x3_train)
+x3_interaction_test = add_interaction_terms(x3_test)
+model_3_interaction, r2_model_3 = fit_and_plot_model(x3_interaction_train, y_train, x3_interaction_test, y_test, model_number=3)
+
+# Adding interaction terms and fitting for Model 4 (Price, Print_ads, online_ads)
+x4_interaction_train = add_interaction_terms(x4_train)
+x4_interaction_test = add_interaction_terms(x4_test)
+model_4_interaction, r2_model_4 = fit_and_plot_model(x4_interaction_train, y_train, x4_interaction_test, y_test, model_number=4)
